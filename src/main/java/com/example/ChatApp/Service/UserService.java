@@ -20,7 +20,8 @@ public class UserService {
 	public boolean Register( String userName, String email, String password) {
 		if(this.userRepository.findByUsername(userName).isEmpty()) {
 			String hashedPassString = PasswordHasher(password);
-			AppUser user = new AppUser(userName,email,hashedPassString);
+//			AppUser user = new AppUser(userName,email,hashedPassString);
+			AppUser user = AppUser.builder().username(userName).email(email).passwordHash(hashedPassString).build();
 			this.userRepository.save(user);
 			return true;
 		}else {
@@ -51,8 +52,7 @@ public class UserService {
 	}
 	
 	public String PasswordHasher(String rawPW) {
-	  	        
-	        return encoder.encode(rawPW);
+        return encoder.encode(rawPW);
 
 	}
 }
